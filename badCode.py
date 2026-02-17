@@ -1,6 +1,7 @@
 import random
 import asyncio
 
+#setsup a dictionary 
 myDict = {
     "The Fool" : "New beginnings",
     "The Magician" : "Resourcefulness",
@@ -29,33 +30,39 @@ myDict = {
 global num
 num=0
 
-global isNotOver
-isNotOver = True
+global usuallyTrue
+usuallyTrue = True
 
-async def shuffle():
-    while(isNotOver):
+#updates num
+async def myFunction():
+    while(usuallyTrue):
         global num
 
+        #adds a random number to num and finds the modulus of the dictionary's length
         num = int((num+random.randint(1,4)) % len(myDict))
         await asyncio.sleep(0.1)
-    
+
+#Draws a card
 def drewCard(number):
 
+    #chooses a random number
     i = random.randint(1,3)
 
     match i:
         case 1:
-            print('"hmm, interesting"')
+            print('"Hmm, interesting"')
         case 2:
-            print('"intriguing"')
+            print('"Intriguing"')
         case _:
             print('"Oh my"')
 
+    #prints a message
     print(f"you drew {list(myDict)[number]} card. This card represents '{myDict[list(myDict)[number]]}'")
 
 async def story():
-    global isNotOver
+    global usuallyTrue
 
+    #the introduction to the story
     print("You enter a tent and see an old women bent over a small table.")
     await asyncio.sleep(0.5)
     print('"Hello, and welcome to my humble tarot reading."')
@@ -64,6 +71,8 @@ async def story():
     await asyncio.sleep(0.5)
     print('"Say the word whenever you want me to stop dearie"')
     await asyncio.sleep(0.5)
+    
+    #waits for the users input
     input(" > ")
     await asyncio.sleep(0.5)
     
@@ -95,10 +104,13 @@ async def story():
     await asyncio.sleep(0.5)
 
     print("I hope you have found this fortune insightful, and that good things shall come to pass.")
-    isNotOver=False
+    
+    #sets "usuallyTrue" to false
+    usuallyTrue=False
 
 
 async def main():
-    await asyncio.gather(shuffle(), story())
+    await asyncio.gather(myFunction(), story())
 
+#runs main
 asyncio.run(main())
