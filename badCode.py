@@ -29,16 +29,33 @@ myDict = {
 global num
 num=0
 
+global isNotOver
+isNotOver = True
+
 async def shuffle():
-    while(True):
+    while(isNotOver):
         global num
-        num = int((num+random.randint(0,4)) % len(myDict))
+
+        num = int((num+random.randint(1,4)) % len(myDict))
         await asyncio.sleep(0.1)
     
+def drewCard(number):
 
+    i = random.randint(1,3)
+
+    match i:
+        case 1:
+            print('"hmm, interesting"')
+        case 2:
+            print('"intriguing"')
+        case _:
+            print('"Oh my"')
+
+    print(f"you drew {list(myDict)[number]} card. This card represents '{myDict[list(myDict)[number]]}'")
 
 async def story():
-    #introduction
+    global isNotOver
+
     print("You enter a tent and see an old women bent over a small table.")
     await asyncio.sleep(0.5)
     print('"Hello, and welcome to my humble tarot reading."')
@@ -47,19 +64,39 @@ async def story():
     await asyncio.sleep(0.5)
     print('"Say the word whenever you want me to stop dearie"')
     await asyncio.sleep(0.5)
-    x = input(" > ")
+    input(" > ")
     await asyncio.sleep(0.5)
-    print("hmmm, interesting")
+    
+    a=num
+    drewCard(a)
     await asyncio.sleep(0.5)
-    print("AGAAGA: " + str(num))
-    print(f"you drew {list(myDict)[num]} card. This card represents {myDict[list(myDict)[num]]}")
+    
+    
+    print("The lady start shuffling again")
+    await asyncio.sleep(0.5)
+    input(" > ")
+    b=num
+    await asyncio.sleep(0.5)
+    while(a==b):
+        b=num
+        await asyncio.sleep(0.2)
+    drewCard(b)
+    await asyncio.sleep(0.5)
 
-    #ask question 1
-    #draw a card
-    #ask question 2
-    #draw a card
-    #ask question 3
-    #draw a card
+    print("The lady start shuffling again")
+    await asyncio.sleep(0.5)
+    input(" > ")
+    c=num
+    await asyncio.sleep(0.5)
+    while(c==a or c==b):
+        c=num
+        await asyncio.sleep(0.2)
+    drewCard(c)
+    await asyncio.sleep(0.5)
+
+    print("I hope you have found this fortune insightful, and that good things shall come to pass.")
+    isNotOver=False
+
 
 async def main():
     await asyncio.gather(shuffle(), story())
