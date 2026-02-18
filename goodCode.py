@@ -45,13 +45,13 @@ def conversation(current_line):
 # KISS - returns a clean string
 # DRY - accesses the dictionary only once
 def drawACard(user_input):
-    selected_card = random.choice(tarotCards.keys())
+    selected_card = random.choice(list(tarotCards.keys()))
     meaning = tarotCards[selected_card]
-    return f'\n"Ahh", "{user_input}", "and your card is...\n" {selected_card} which can only mean a {meaning}\n'
+    return f'\n"Ahh", "{user_input}", "and your card is..."\n "{selected_card}, which can only mean a {meaning}"\n'
 
 # SOC - function that only handles the continuation of the game
 def continuedFortune():
-    want_to_continue = input("This is the end...\n or is it?\nWould you like to reassess your fortune? (y/n):\n >").lower
+    want_to_continue = input("This is the end...\n or is it?\nWould you like to reassess your fortune? (y/n):\n > ").lower
     return want_to_continue == "y"
 
 def main():
@@ -60,10 +60,10 @@ def main():
         user_response = conversation(i)
         print(drawACard(user_response))
 
-    if continuedFortune:
+    if continuedFortune():
         main()
     else:
-        print("Suddenly the old woman arises and with a cackle her and the tent vanish.")
+        print("Suddenly the old woman jumps out of her chair and with a haunting cackle her and the tent vanish.")
 
 
 if __name__ == '__main__':
